@@ -91,6 +91,7 @@ public class GraphPanel extends JPanel {
 
         // create x and y axes
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding);
+        g2.drawString("Commit", getWidth()/2, getHeight() - labelPadding + 10);
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding, getHeight() - padding - labelPadding);
 
         Stroke oldStroke = g2.getStroke();

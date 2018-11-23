@@ -3,6 +3,8 @@ package com.completionCheck.project;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StatusCheck {
 
@@ -44,4 +46,11 @@ public class StatusCheck {
         return issueCount;
     }
 
+    public static List<Integer> checkFiles(List<String> files) {
+        List<Integer> scores = new ArrayList<>();
+        for(String s:files) {
+            scores.add(checkTODOsAndPrintStatements(s));
+        }
+        return scores;
+    }
 }

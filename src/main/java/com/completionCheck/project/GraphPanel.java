@@ -16,11 +16,12 @@ public class GraphPanel extends JPanel {
 
     private int width = 800;
     private int heigth = 400;
-    private int padding = 25;
-    private int labelPadding = 25;
+    private int padding = 50;
+    private int labelPadding = 50;
     private Color lineColor = new Color(44, 102, 230, 180);
     private Color pointColor = new Color(100, 100, 100, 180);
     private Color gridColor = new Color(200, 200, 200, 200);
+    private int threshold = 9;
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
     private int pointWidth = 4;
     private int numberYDivisions = 10;
@@ -93,25 +94,33 @@ public class GraphPanel extends JPanel {
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding);
         g2.drawString("Commit", getWidth()/2, getHeight() - labelPadding + 10);
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding, getHeight() - padding - labelPadding);
+        g2.drawString("TODOs", 5, getHeight()/2);
 
         Stroke oldStroke = g2.getStroke();
-        g2.setColor(lineColor);
         g2.setStroke(GRAPH_STROKE);
         for (int i = 0; i < graphPoints.size() - 1; i++) {
             int x1 = graphPoints.get(i).x;
             int y1 = graphPoints.get(i).y;
             int x2 = graphPoints.get(i + 1).x;
             int y2 = graphPoints.get(i + 1).y;
+            if (getScoreFromPoint(y1) > threshold || getScoreFromPoint(y2) > threshold)
+                g2.setColor(Color.RED);
+            else
+                g2.setColor(lineColor);
             g2.drawLine(x1, y1, x2, y2);
         }
 
         g2.setStroke(oldStroke);
-        g2.setColor(pointColor);
+//        g2.setColor(pointColor);
         for (int i = 0; i < graphPoints.size(); i++) {
             int x = graphPoints.get(i).x - pointWidth / 2;
             int y = graphPoints.get(i).y - pointWidth / 2;
             int ovalW = pointWidth;
             int ovalH = pointWidth;
+            if (getScoreFromPoint(y) > threshold)
+                g2.setColor(Color.YELLOW);
+            else
+                g2.setColor(pointColor);
             g2.fillOval(x, y, ovalW, ovalH);
         }
     }
@@ -140,5 +149,10 @@ public class GraphPanel extends JPanel {
 
     public List<Integer> getScores() {
         return scores;
+    }
+
+    public int getScoreFromPoint(int point) {
+        Integer yScale = (getHeight() - 2 * padding - labelPadding) / getMaxScore();
+        return Math.abs(((point - padding) / yScale) - getMaxScore());
     }
 }

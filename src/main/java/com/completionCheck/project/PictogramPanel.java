@@ -16,12 +16,12 @@ public class PictogramPanel extends JPanel{
     JPanel dPanel;
     private static String infile;
     private static final int BLOCK_HEIGHT = 10;
-    private static final int BLOCK_WIDTH = 9;
-    private static final int XOFFSET = 30;
+    private static final int BLOCK_WIDTH = 5;
+    private static final int X_OFFSET = 30;
     private Color textColor = Color.BLACK;
     private Color todoColor = Color.RED;
-    private Color codeColor = new Color(44, 102, 230, 255);
     private Color indentColor = Color.LIGHT_GRAY;
+    private Color codeColor = new Color(44, 102, 230, 200);
 
 
     public PictogramPanel() {
@@ -53,11 +53,12 @@ public class PictogramPanel extends JPanel{
         String infilecopy = infile;
         // splits string into array of single character strings
         String[] charArray = infilecopy.split("(?!^)");
+
         for (String s: charArray) {
             // print line number
             if (col == 0){
                 String rowNumber = Integer.toString(row);
-                drawText(g2, textColor, rowNumber, (BLOCK_WIDTH / 2) * col,BLOCK_HEIGHT * row);
+                drawText(g2, textColor, rowNumber, (BLOCK_WIDTH) * col,BLOCK_HEIGHT * row);
                 col++;
             }
 
@@ -76,11 +77,11 @@ public class PictogramPanel extends JPanel{
 
             // only prints leading spaces / indents (white blocks)
             else if ((s.contains(" ")) && !blocked){
-                drawBlock(g2, indentColor, (BLOCK_WIDTH / 2) * col, BLOCK_HEIGHT * row);
+                drawBlock(g2, indentColor, BLOCK_WIDTH * col, BLOCK_HEIGHT * row);
                 col++;
             }
 
-            // checks for todos (green blocks)
+            // checks for todos (red blocks)
             else if (s.equalsIgnoreCase("t")){
                 boolean matched = true;
                 for (int i = 1; i < 4; i++){
@@ -89,18 +90,17 @@ public class PictogramPanel extends JPanel{
                     }
                 }
                 if (matched) {
-                    // prints green blocks for todo
                     for (int j = 0; j < 4; j++) {
-                        drawBlock(g2, todoColor, (BLOCK_WIDTH / 2) * col, BLOCK_HEIGHT * row);
+                        drawBlock(g2, todoColor, BLOCK_WIDTH * col, BLOCK_HEIGHT * row);
                         col++;
                     }
                 }
             }
 
-            // everything else is code (red blocks)
+            // everything else is code (blue blocks)
             else {
                 // System.out.println(s);
-                drawBlock(g2, codeColor, (BLOCK_WIDTH / 2) * col, BLOCK_HEIGHT  * row);
+                drawBlock(g2, codeColor, BLOCK_WIDTH * col, BLOCK_HEIGHT  * row);
                 blocked = true;
                 col++;
             }
@@ -108,11 +108,10 @@ public class PictogramPanel extends JPanel{
         }
 
     }
-
-    // TODO: this actually creates an extra box on end of each line, no idea why
+    
     public void drawBlock (Graphics2D g2, Color color, int x, int y) {
         g2.setColor(color);
-        g2.fillRect(x + XOFFSET, y, BLOCK_WIDTH, BLOCK_HEIGHT);
+        g2.fillRect(x + X_OFFSET, y, BLOCK_WIDTH, BLOCK_HEIGHT);
     }
 
     // TODO: not sure why last line number isnt drawn

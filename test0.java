@@ -1,3 +1,4 @@
+// Test code for Pictogram generation
 // Mike Scott
 // 2d array manipulation examples
 

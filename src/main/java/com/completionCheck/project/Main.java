@@ -36,5 +36,18 @@ public class Main {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+        JFrame f = new JFrame("Code Pictogram");
+        Component c = new PictogramPanel();
+        f.getContentPane().add(c);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.pack();
+        f.setVisible(true);
+
+        // TODO: scroll size not dynamic, will cut off if file is too long
+        JScrollPane scroller = new JScrollPane(c);
+        f.getContentPane().add(scroller, BorderLayout.CENTER);
+
+
     }
 }

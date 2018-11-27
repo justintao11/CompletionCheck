@@ -62,6 +62,12 @@ public class PictogramPanel extends JPanel{
                 col++;
             }
 
+            // hack to print the last line number
+            if ((index + 1) == charArray.length){
+                String rowNumber = Integer.toString(row + 1);
+                drawText(g2, textColor, rowNumber, 0,BLOCK_HEIGHT * (row + 1));
+            }
+
             // new line resets
             if (s.equals("\n")) {
                 // System.out.println("new line");
@@ -92,6 +98,8 @@ public class PictogramPanel extends JPanel{
                 if (matched) {
                     for (int j = 0; j < 4; j++) {
                         drawBlock(g2, todoColor, BLOCK_WIDTH * col, BLOCK_HEIGHT * row);
+                        // arrows to point at line number
+                        drawText(g2, Color.red, "<<", (X_OFFSET - 10), BLOCK_HEIGHT * (row + 1));
                         col++;
                     }
                 }
